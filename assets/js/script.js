@@ -1,0 +1,118 @@
+var wpHtmlCssToImageInstance = {
+	btnGenerateImageCallBack: function(container, btnElement) {
+		let dataTarget = jQuery(container).attr('data-target') || false;
+		let haveContent = jQuery(container).attr('data-have-content') || false;
+		let dataHeight = jQuery(container).attr('data-height') || false;
+		let dataWidth = jQuery(container).attr('data-width') || false;
+		let html, target;
+		let css = '';
+		let cssElement = jQuery(container).find('style');
+		if (cssElement && cssElement.length > 0) {
+			css = cssElement.html();
+			cssElement.remove();
+		}
+		if (!haveContent && dataTarget) {
+			target = jQuery('#' + dataTarget);
+			if (target && target.length > 0) {
+				html = target[0].outerHTML;
+				if (!dataHeight) {
+					dataHeight = wpHtmlCssToImageInstance.getHeight(target);
+				}
+				if (!dataWidth) {
+					dataWidth = wpHtmlCssToImageInstance.getWidth(target);
+				}
+			}
+		} else {
+			target = jQuery(container).find('#htmlcsstoimage-content');
+			if (target && target.length > 0) {
+				html = target.html();
+				if (!dataHeight) {
+					dataHeight = wpHtmlCssToImageInstance.getHeight(target);
+				}
+				if (!dataWidth) {
+					dataWidth = wpHtmlCssToImageInstance.getWidth(target);
+				}
+			}
+		}
+		target.append('<style>'+css+'</style>');
+		if (html) {
+			html = html.replaceAll('castocitycom.local', 'castocity.com');
+			wpHtmlCssToImageInstance.postImageCall(html, css, btnElement, dataHeight, dataWidth);
+		} else {
+			alert('Invalid HTML, contact administrator!');
+		}
+	},
+	getWidth: function(container) {
+		if (container) {
+			return Math.round(jQuery(container).width());
+		}
+	},
+	getHeight: function(container) {
+		if (container) {
+			return Math.round(jQuery(container).height());
+		}
+	},
+	postImageCall: function(html, css, btnElement, dataHeight, dataWidth) {
+		let originalText = jQuery(btnElement).text();
+		jQuery(btnElement).text('Generating...').attr('disabled', 'disabled');
+		jQuery.ajax({
+			type: 'POST',
+			dataType: 'json',
+			url: wpHtmlCssToImageObj.admin_url,
+			data: {
+				'action': 'post_htmlcsstoimage',
+				'nonce': wpHtmlCssToImageObj.nonce,
+				'html': html,
+				'css': css,
+				'dataHeight': dataHeight,
+				'dataWidth': dataWidth,
+			},
+			success: function(response) {
+				console.log(response);
+				if (response && response.data.code === 200 && response.data.url) {
+					let extraPath = '.png';
+					if (dataHeight || dataWidth) {
+						extraPath += '?';
+						if (dataHeight && dataWidth) {
+							extraPath += 'height=' + dataHeight + '&width=' + dataWidth;
+						} else if (dataHeight && !dataWidth) {
+							extraPath += 'height=' + dataHeight;
+						} else if (!dataHeight && dataWidth) {
+							extraPath += 'width=' + dataWidth;
+						}
+					}
+					window.open(response.data.url + extraPath+'&dl=1', '_blank');
+				}
+			},
+			error: function(request, status, error) {
+				alert(request.responseText);
+			},
+			complete: function() {
+				jQuery(btnElement).text(originalText).removeAttr('disabled');
+			},
+		});
+	},
+	init: function() {
+		let containers = jQuery('.htmlcsstoimage-container');
+		if (containers && containers.length > 0) {
+			jQuery.each(containers, function(i, e) {
+				let container = jQuery(e);
+				let btnGenerateImage = container.find('a.create-image');
+				if (btnGenerateImage && btnGenerateImage.length > 0) {
+					btnGenerateImage.on('click', function(e) {
+						e.preventDefault();
+						let isDisabled = btnGenerateImage.attr('disabled') || false;
+						if (isDisabled) {
+							return false;
+						}
+						wpHtmlCssToImageInstance.btnGenerateImageCallBack(container, btnGenerateImage);
+					});
+				}
+			});
+		}
+	},
+};
+
+jQuery(document).ready(function() {
+	wpHtmlCssToImageInstance.init();
+});
