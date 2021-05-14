@@ -1,6 +1,6 @@
 <?php
 
-use gfirem\HtmlCssToImage\HtmlCssToImage;
+use scalater\HtmlCssToImage\HtmlCssToImage;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

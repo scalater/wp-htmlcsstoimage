@@ -24,24 +24,24 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '141d12bbe0377fa43c9a8435fa8251e2091977a3',
     'name' => 'gfirem/wp-htmlcsstoimage',
   ),
   'versions' => 
   array (
     'gfirem/wp-htmlcsstoimage' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '141d12bbe0377fa43c9a8435fa8251e2091977a3',
     ),
     'guzzlehttp/guzzle' => 
     array (
