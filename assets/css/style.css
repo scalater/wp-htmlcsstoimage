@@ -30,6 +30,7 @@ div.htmlcsstoimage-container a.create-image {
 	border-width: 1px;
 	border-color: #cccccc;
 	border-style: solid;
+	display: none;
 }
 
 div.htmlcsstoimage-container a.create-image:hover {
@@ -39,6 +40,7 @@ div.htmlcsstoimage-container a.create-image:hover {
 	border-color: #cccccc;
 }
 
+div.htmlcsstoimage-container [disabled],
 div.htmlcsstoimage-container a.create-image[disabled] {
 	color: darkgray;
 	cursor: not-allowed;

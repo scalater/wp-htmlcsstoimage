@@ -40,6 +40,7 @@ class WpHtmlCssToImageShortCode {
 			$client   = new HtmlCssToImage( $user_id, $api_key );
 			$response = $client->post_image( $html, '', $css );
 			if ( ! empty( $response ) && $response['code'] === 200 ) {
+				do_action( 'wp_htmlcsstoimage', $response );
 				wp_send_json_success( $response );
 			} else {
 				wp_send_json_error( $response );
@@ -53,9 +54,12 @@ class WpHtmlCssToImageShortCode {
 
 	public function htmlcsstoimage_callback( $attr, $content = null ) {
 		$params = shortcode_atts( array(
-			'target' => '',
-			'img_id' => '',
-			'size'   => '',
+			'target'       => '',
+			'img_id'       => '',
+			'size'         => '',
+			'episode_id'   => '',
+			'save_form_id' => '',
+			'trigger_id' => '',
 		), $attr );
 
 		$attr_data_img = '';
@@ -66,14 +70,18 @@ class WpHtmlCssToImageShortCode {
 		if ( ! empty( $params['target'] ) ) {
 			$attr_target = sprintf( 'data-target="%s"', $params['target'] );
 		}
-		$attr_size  = '';
+		$attr_size = '';
 		if ( ! empty( $params['size'] ) ) {
-			$sizes      = explode( 'x', $params['size'] );
-			$attr_size  = sprintf( 'data-width="%s" data-height="%s"',  $sizes[0], $sizes[1] );
+			$sizes     = explode( 'x', $params['size'] );
+			$attr_size = sprintf( 'data-width="%s" data-height="%s"', $sizes[0], $sizes[1] );
 		}
 		$attr_have_content = sprintf( 'data-have-content="%s"', ! empty( $content ) );
+		$attr_trigger_id = '';
+		if ( ! empty( $params['trigger_id'] ) ) {
+			$attr_trigger_id = sprintf( 'data-trigger-id="%s"', $params['trigger_id'] );
+		}
 
-		return sprintf( '<div class="htmlcsstoimage-container" %s %s %s %s><div id="htmlcsstoimage-content">%s</div><a href="#" class="create-image">%s</a></div>', $attr_size, $attr_target, $attr_data_img, $attr_have_content, $content, __( 'Generate Image', 'wp-htmlcsstoimage' ) );
+		return sprintf( '<div class="htmlcsstoimage-container" %s %s %s %s %s><div id="htmlcsstoimage-content">%s</div><a href="#" class="create-image"><i class="fas fa-download"></i></a></div>', $attr_trigger_id, $attr_size, $attr_target, $attr_data_img, $attr_have_content, $content, __( 'Generate Image', 'wp-htmlcsstoimage' ) );
 	}
 
 	public function wp_enqueue_scripts() {

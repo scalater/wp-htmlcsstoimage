@@ -34,7 +34,7 @@ var wpHtmlCssToImageInstance = {
 				}
 			}
 		}
-		target.append('<style>'+css+'</style>');
+		target.append('<style>' + css + '</style>');
 		if (html) {
 			html = html.replaceAll('castocitycom.local', 'castocity.com');
 			wpHtmlCssToImageInstance.postImageCall(html, css, btnElement, dataHeight, dataWidth);
@@ -53,8 +53,8 @@ var wpHtmlCssToImageInstance = {
 		}
 	},
 	postImageCall: function(html, css, btnElement, dataHeight, dataWidth) {
-		let originalText = jQuery(btnElement).text();
-		jQuery(btnElement).text('Generating...').attr('disabled', 'disabled');
+		let originalHtml = jQuery(btnElement).html();
+		jQuery(btnElement).html('<i class="fas fa-spinner fa-spin"></i>').attr('disabled', 'disabled');
 		jQuery.ajax({
 			type: 'POST',
 			dataType: 'json',
@@ -81,14 +81,14 @@ var wpHtmlCssToImageInstance = {
 							extraPath += 'width=' + dataWidth;
 						}
 					}
-					window.open(response.data.url + extraPath+'&dl=1', '_blank');
+					window.open(response.data.url + extraPath + '&dl=1', '_blank');
 				}
 			},
 			error: function(request, status, error) {
 				alert(request.responseText);
 			},
 			complete: function() {
-				jQuery(btnElement).text(originalText).removeAttr('disabled');
+				jQuery(btnElement).html(originalHtml).removeAttr('disabled');
 			},
 		});
 	},
@@ -97,7 +97,18 @@ var wpHtmlCssToImageInstance = {
 		if (containers && containers.length > 0) {
 			jQuery.each(containers, function(i, e) {
 				let container = jQuery(e);
-				let btnGenerateImage = container.find('a.create-image');
+				let btnGenerateImage;
+				let triggerId = container.attr('data-trigger-id');
+				if (triggerId) {
+					let triggerElement = jQuery('#'+triggerId);
+					if (triggerElement && triggerElement.length > 0) {
+						btnGenerateImage = triggerElement;
+					}
+				}
+				if (!btnGenerateImage) {
+					btnGenerateImage = container.find('a.create-image');
+					btnGenerateImage.show();
+				}
 				if (btnGenerateImage && btnGenerateImage.length > 0) {
 					btnGenerateImage.on('click', function(e) {
 						e.preventDefault();
