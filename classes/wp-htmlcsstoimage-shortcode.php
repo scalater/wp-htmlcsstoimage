@@ -31,6 +31,11 @@ class WpHtmlCssToImageShortCode {
 			if ( ! empty( $_POST['css'] ) ) {
 				$css = stripslashes_deep( $_POST['css'] );
 			}
+			$entry = intval( $_POST['entry'] );
+			$subject = sanitize_text_field( $_POST['subject'] );
+			$type = sanitize_text_field( $_POST['type'] );
+			$podcast_id = sanitize_text_field( $_POST['podcast_id'] );
+			$orientation = sanitize_text_field( $_POST['orientation'] );
 
 			$user_id = get_option( 'wp_htmlcsstoimage_user_id' );
 			$api_key = get_option( 'wp_htmlcsstoimage_api_key' );
@@ -40,7 +45,7 @@ class WpHtmlCssToImageShortCode {
 			$client   = new HtmlCssToImage( $user_id, $api_key );
 			$response = $client->post_image( $html, '', $css );
 			if ( ! empty( $response ) && $response['code'] === 200 ) {
-				do_action( 'wp_htmlcsstoimage', $response );
+				do_action( 'wp_htmlcsstoimage', $response, $entry, $subject, $type, $podcast_id, $orientation );
 				wp_send_json_success( $response );
 			} else {
 				wp_send_json_error( $response );
@@ -57,9 +62,12 @@ class WpHtmlCssToImageShortCode {
 			'target'       => '',
 			'img_id'       => '',
 			'size'         => '',
-			'episode_id'   => '',
 			'save_form_id' => '',
-			'trigger_id' => '',
+			'trigger_id'   => '',
+			'subject'      => '',
+			'type'         => '',
+			'podcast_id'   => '',
+			'orientation'  => '',
 		), $attr );
 
 		$attr_data_img = '';
@@ -76,12 +84,22 @@ class WpHtmlCssToImageShortCode {
 			$attr_size = sprintf( 'data-width="%s" data-height="%s"', $sizes[0], $sizes[1] );
 		}
 		$attr_have_content = sprintf( 'data-have-content="%s"', ! empty( $content ) );
-		$attr_trigger_id = '';
+		$attr_trigger_id   = '';
 		if ( ! empty( $params['trigger_id'] ) ) {
 			$attr_trigger_id = sprintf( 'data-trigger-id="%s"', $params['trigger_id'] );
 		}
+		$attr_entry_id = '';
+		if ( ! empty( $_REQUEST['entry'] ) ) {
+			$attr_entry_id = sprintf( 'data-entry-id="%s"', intval( $_REQUEST['entry'] ) );
+		}
+		$data['subject']     = ! empty( $params['subject'] ) ? sanitize_text_field( $params['subject'] ) : false;
+		$data['type']        = ! empty( $params['type'] ) ? sanitize_text_field( $params['type'] ) : false;
+		$data['podcast_id']  = ! empty( $params['podcast_id'] ) ? intval( $params['podcast_id'] ) : false;
+		$data['orientation'] = ! empty( $params['orientation'] ) ? sanitize_text_field( $params['orientation'] ) : false;
+		$attr_form_data      = json_encode( $data );
 
-		return sprintf( '<div class="htmlcsstoimage-container" %s %s %s %s %s><div id="htmlcsstoimage-content">%s</div><a href="#" class="create-image"><i class="fas fa-download"></i></a></div>', $attr_trigger_id, $attr_size, $attr_target, $attr_data_img, $attr_have_content, $content, __( 'Generate Image', 'wp-htmlcsstoimage' ) );
+		return sprintf( '<div class="htmlcsstoimage-container" %s %s %s %s %s %s><input type="hidden" value="%s"><div id="htmlcsstoimage-content">%s</div><a href="#" class="create-image"><i class="fas fa-download"></i></a></div>',
+			$attr_entry_id, $attr_trigger_id, $attr_size, $attr_target, $attr_data_img, $attr_have_content, htmlspecialchars($attr_form_data), $content );
 	}
 
 	public function wp_enqueue_scripts() {

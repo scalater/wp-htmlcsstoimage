@@ -4,6 +4,11 @@ var wpHtmlCssToImageInstance = {
 		let haveContent = jQuery(container).attr('data-have-content') || false;
 		let dataHeight = jQuery(container).attr('data-height') || false;
 		let dataWidth = jQuery(container).attr('data-width') || false;
+		let entry = jQuery(container).attr('data-entry-id') || false;
+		let formData = jQuery(container).find('input[type="hidden"]') || false;
+		if (formData && formData.val()) {
+			formData = JSON.parse(formData.val());
+		}
 		let html, target;
 		let css = '';
 		let cssElement = jQuery(container).find('style');
@@ -37,7 +42,7 @@ var wpHtmlCssToImageInstance = {
 		target.append('<style>' + css + '</style>');
 		if (html) {
 			html = html.replaceAll('castocitycom.local', 'castocity.com');
-			wpHtmlCssToImageInstance.postImageCall(html, css, btnElement, dataHeight, dataWidth);
+			wpHtmlCssToImageInstance.postImageCall(html, css, btnElement, dataHeight, dataWidth, entry, formData);
 		} else {
 			alert('Invalid HTML, contact administrator!');
 		}
@@ -52,9 +57,16 @@ var wpHtmlCssToImageInstance = {
 			return Math.round(jQuery(container).height());
 		}
 	},
-	postImageCall: function(html, css, btnElement, dataHeight, dataWidth) {
+	postImageCall: function(html, css, btnElement, dataHeight, dataWidth, entry, formData) {
 		let originalHtml = jQuery(btnElement).html();
 		jQuery(btnElement).html('<i class="fas fa-spinner fa-spin"></i>').attr('disabled', 'disabled');
+		let subject, type, podcast_id, orientation;
+		if (formData) {
+			subject = formData['subject'] || false;
+			type = formData['type'] || false;
+			podcast_id = formData['podcast_id'] || false;
+			orientation = formData['orientation'] || false;
+		}
 		jQuery.ajax({
 			type: 'POST',
 			dataType: 'json',
@@ -66,6 +78,11 @@ var wpHtmlCssToImageInstance = {
 				'css': css,
 				'dataHeight': dataHeight,
 				'dataWidth': dataWidth,
+				'entry': entry,
+				'subject': subject,
+				'type': type,
+				'podcast_id': podcast_id,
+				'orientation': orientation,
 			},
 			success: function(response) {
 				console.log(response);
@@ -100,7 +117,7 @@ var wpHtmlCssToImageInstance = {
 				let btnGenerateImage;
 				let triggerId = container.attr('data-trigger-id');
 				if (triggerId) {
-					let triggerElement = jQuery('#'+triggerId);
+					let triggerElement = jQuery('#' + triggerId);
 					if (triggerElement && triggerElement.length > 0) {
 						btnGenerateImage = triggerElement;
 					}
