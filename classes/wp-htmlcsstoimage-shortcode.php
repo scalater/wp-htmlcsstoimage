@@ -27,14 +27,18 @@ class WpHtmlCssToImageShortCode {
 			}
 
 			$html = stripslashes_deep( $_POST['html'] );
-			$css  = '';
+			$in_head = get_option( 'wp_htmlcsstoimage_header' );
+			if ( ! empty( $in_head ) ) {
+				$html = $in_head . $html;
+			}
+			$css = '';
 			if ( ! empty( $_POST['css'] ) ) {
 				$css = stripslashes_deep( $_POST['css'] );
 			}
-			$entry = intval( $_POST['entry'] );
-			$subject = sanitize_text_field( $_POST['subject'] );
-			$type = sanitize_text_field( $_POST['type'] );
-			$podcast_id = sanitize_text_field( $_POST['podcast_id'] );
+			$entry       = intval( $_POST['entry'] );
+			$subject     = sanitize_text_field( $_POST['subject'] );
+			$type        = sanitize_text_field( $_POST['type'] );
+			$podcast_id  = sanitize_text_field( $_POST['podcast_id'] );
 			$orientation = sanitize_text_field( $_POST['orientation'] );
 
 			$user_id = get_option( 'wp_htmlcsstoimage_user_id' );
@@ -99,7 +103,7 @@ class WpHtmlCssToImageShortCode {
 		$attr_form_data      = json_encode( $data );
 
 		return sprintf( '<div class="htmlcsstoimage-container" %s %s %s %s %s %s><input type="hidden" value="%s"><div id="htmlcsstoimage-content">%s</div><a href="#" class="create-image"><i class="fas fa-download"></i></a></div>',
-			$attr_entry_id, $attr_trigger_id, $attr_size, $attr_target, $attr_data_img, $attr_have_content, htmlspecialchars($attr_form_data), $content );
+			$attr_entry_id, $attr_trigger_id, $attr_size, $attr_target, $attr_data_img, $attr_have_content, htmlspecialchars( $attr_form_data ), $content );
 	}
 
 	public function wp_enqueue_scripts() {

@@ -40,9 +40,11 @@ class WpHtmlCssToImageAdmin {
 
 		add_settings_field( 'wp_htmlcsstoimage_user_id', __( 'User Id', 'wp-htmlcsstoimage' ), array( $this, 'wp_htmlcsstoimage_user_id_cb' ), 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_section' );
 		add_settings_field( 'wp_htmlcsstoimage_api_key', __( 'API key', 'wp-htmlcsstoimage' ), array( $this, 'wp_htmlcsstoimage_api_key_cb' ), 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_section' );
+		add_settings_field( 'wp_htmlcsstoimage_header', __( 'Header', 'wp-htmlcsstoimage' ), array( $this, 'wp_htmlcsstoimage_header_cb' ), 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_section' );
 
 		register_setting( 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_user_id' );
 		register_setting( 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_api_key' );
+		register_setting( 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_header' );
 	}
 
 	public function wp_htmlcsstoimage_user_id_cb() {
@@ -59,6 +61,15 @@ class WpHtmlCssToImageAdmin {
 		?>
 		<p>
 			<input type="password" name="wp_htmlcsstoimage_api_key" value="<?php echo isset( $value ) ? esc_attr( $value ) : ''; ?>" style="width: 350px;">
+		</p>
+		<?php
+	}
+
+	public function wp_htmlcsstoimage_header_cb() {
+		$value = get_option( 'wp_htmlcsstoimage_header' );
+		?>
+		<p>
+			<textarea style="width: 550px;" rows="20" name="wp_htmlcsstoimage_header"><?php echo esc_textarea( $value ) ?></textarea>
 		</p>
 		<?php
 	}
