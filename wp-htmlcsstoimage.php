@@ -47,8 +47,8 @@ class WpHtmlCssToImage {
 		include_once 'classes/wp-htmlcsstoimage-shortcode.php';
 		new WpHtmlCssToImageShortCode();
 		//Snippet code
-		add_action( 'wp_htmlcsstoimage',function($response, $entry, $subject, $type, $podcast_id, $orientation){
-			if ( ! empty( $response ) && !empty($response['url']) ) {
+		add_action( 'wp_htmlcsstoimage', function ( $response, $entry, $subject, $type, $podcast_id, $orientation ) {
+			if ( ! empty( $response ) && ! empty( $response['url'] ) ) {
 				$data = array(
 					'form_id'                 => 578,//update the form id
 					'frm_user_id'             => get_current_user_id(),

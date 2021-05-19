@@ -26,10 +26,10 @@ class WpHtmlCssToImageShortCode {
 				die();
 			}
 
-			$html = stripslashes_deep( $_POST['html'] );
+			$html    = stripslashes_deep( $_POST['html'] );
 			$in_head = get_option( 'wp_htmlcsstoimage_header' );
 			if ( ! empty( $in_head ) ) {
-				$html = $in_head . $html;
+				$html = sprintf( '<div>%s</div>',$in_head . $html);
 			}
 			$css = '';
 			if ( ! empty( $_POST['css'] ) ) {

@@ -456,16 +456,16 @@
         },
         {
             "name": "scalater/php-htmlcsstoimage",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scalater/php-htmlcsstoimage.git",
-                "reference": "61d61fe77a58f176787130011c5407ff80b2ca2c"
+                "reference": "264c1319fe30a850f2bf4c8d69bb50aedb681344"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scalater/php-htmlcsstoimage/zipball/61d61fe77a58f176787130011c5407ff80b2ca2c",
-                "reference": "61d61fe77a58f176787130011c5407ff80b2ca2c",
+                "url": "https://api.github.com/repos/scalater/php-htmlcsstoimage/zipball/264c1319fe30a850f2bf4c8d69bb50aedb681344",
+                "reference": "264c1319fe30a850f2bf4c8d69bb50aedb681344",
                 "shasum": ""
             },
             "require": {
@@ -497,9 +497,9 @@
             "description": "PHP Library to connect with htmlcsstoimage service",
             "support": {
                 "issues": "https://github.com/scalater/php-htmlcsstoimage/issues",
-                "source": "https://github.com/scalater/php-htmlcsstoimage/tree/1.0.0"
+                "source": "https://github.com/scalater/php-htmlcsstoimage/tree/1.0.1"
             },
-            "time": "2021-05-14T16:56:47+00:00"
+            "time": "2021-05-19T09:35:53+00:00"
         }
     ],
     "packages-dev": [],
