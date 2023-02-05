@@ -1,13 +1,31 @@
 <?php
+/**
+ * Shortcode class
+ *
+ * @package SCALATER\HTMLCSSTOIMAGE
+ * @author Scalater Team
+ * @license GPLv2 or later
+ */
 
-use scalater\HtmlCssToImage\HtmlCssToImage;
+namespace SCALATER\HTMLCSSTOIMAGE;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+use Exception;
+use SCALATER\HTMLCSSTOIMAGE\Traits\Singleton;
 
-class WpHtmlCssToImageShortCode {
-	public function __construct() {
+defined( 'ABSPATH' ) || exit;
+
+/**
+* Class Shortcode
+*
+* @package SCALATER\HTMLCSSTOIMAGE
+*/
+class Shortcode extends Base {
+	use Singleton;
+
+	/**
+	 * Adding action hooks
+	 */
+	protected function init() {
 		add_shortcode( 'htmlcsstoimage', array( $this, 'htmlcsstoimage_callback' ) );
 		add_action( 'wp_footer', array( $this, 'wp_enqueue_scripts' ) );
 		add_action( "wp_ajax_nopriv_post_htmlcsstoimage", array( $this, "post_htmlcsstoimage_callback" ) );
@@ -22,7 +40,7 @@ class WpHtmlCssToImageShortCode {
 			if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) || empty( $_POST['html'] ) ) {
 				die();
 			}
-			if ( ! wp_verify_nonce( $_POST['nonce'], WpHtmlCssToImage::get_slug() . __DIR__ ) ) {
+			if ( ! wp_verify_nonce( $_POST['nonce'], $this->get_slug() . __DIR__ ) ) {
 				die();
 			}
 
@@ -44,7 +62,7 @@ class WpHtmlCssToImageShortCode {
 			$user_id = get_option( 'wp_htmlcsstoimage_user_id' );
 			$api_key = get_option( 'wp_htmlcsstoimage_api_key' );
 			if ( empty( $user_id ) || empty( $api_key ) ) {
-				WpHtmlCssToImage::error_log( 'Invalid options' );
+				$this->error_log( 'Invalid options' );
 			}
 			$client   = new HtmlCssToImage( $user_id, $api_key );
 			$response = $client->post_image( $html, '', $css );
@@ -56,7 +74,7 @@ class WpHtmlCssToImageShortCode {
 			}
 
 		} catch ( Exception $ex ) {
-			WpHtmlCssToImage::error_log( $ex->getMessage() );
+			$this->error_log( $ex->getMessage() );
 		}
 		die();
 	}
@@ -110,13 +128,13 @@ class WpHtmlCssToImageShortCode {
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && defined( 'DOING_CRON' ) && DOING_CRON ) {
 			return;
 		}
-		$js_asset  = WpHtmlCssToImage::assets_path( 'script' );
-		$css_asset = WpHtmlCssToImage::assets_path( 'style', 'css' );
-		wp_enqueue_script( 'wp-htmlcsstoimage-js', $js_asset, array( "jquery" ), WpHtmlCssToImage::get_version(), true );
-		wp_enqueue_style( 'wp-htmlcsstoimage-css', $css_asset, array(), WpHtmlCssToImage::get_version() );
+		$js_asset  = $this->get_asset_url( 'script' );
+		$css_asset = $this->get_asset_url( 'style', 'css' );
+		wp_enqueue_script( 'wp-htmlcsstoimage-js', $js_asset, array( "jquery" ), $this->get_version(), true );
+		wp_enqueue_style( 'wp-htmlcsstoimage-css', $css_asset, array(), $this->get_version() );
 		$args = array(
 			'admin_url' => admin_url( 'admin-ajax.php' ),
-			'nonce'     => wp_create_nonce( WpHtmlCssToImage::get_slug() . __DIR__ ),
+			'nonce'     => wp_create_nonce( $this->get_slug() . __DIR__ ),
 		);
 		wp_localize_script( 'wp-htmlcsstoimage-js', 'wpHtmlCssToImageObj', $args );
 	}

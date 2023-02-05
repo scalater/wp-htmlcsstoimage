@@ -1,17 +1,36 @@
 <?php
+/**
+ * Admin class
+ *
+ * @package SCALATER\HTMLCSSTOIMAGE
+ * @author Scalater Team
+ * @license GPLv2 or later
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+namespace SCALATER\HTMLCSSTOIMAGE;
 
-class WpHtmlCssToImageAdmin {
-	public function __construct() {
+use SCALATER\HTMLCSSTOIMAGE\Traits\Singleton;
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Class Admin
+ *
+ * @package SCALATER\HTMLCSSTOIMAGE
+ */
+class Admin extends Base {
+	use Singleton;
+
+	/**
+	 * Adding action hooks
+	 */
+	protected function init() {
 		add_action( 'admin_menu', array( $this, 'create_setting_page' ) );
 		add_action( 'admin_init', array( $this, 'settings_init' ) );
 	}
 
 	public function create_setting_page() {
-		add_options_page( __( 'HtmlCssToImage', 'wp-htmlcsstoimage' ), __( 'HtmlCssToImage', 'wp-htmlcsstoimage' ), 'manage_options', WpHtmlCssToImage::get_slug(), array( $this, 'wp_htmlcsstoimage_page' ) );
+		add_options_page( __( 'HtmlCssToImage', 'wp-htmlcsstoimage' ), __( 'HtmlCssToImage', 'wp-htmlcsstoimage' ), 'manage_options', $this->get_slug(), array( $this, 'wp_htmlcsstoimage_page' ) );
 	}
 
 	public function wp_htmlcsstoimage_page() {
