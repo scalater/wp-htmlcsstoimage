@@ -2,7 +2,7 @@ name: 🚀 Deploy to QA website on push
 on:
   push:
     branches:
-      - main
+      - master
       - develop
 
 jobs:
