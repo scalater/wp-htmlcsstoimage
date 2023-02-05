@@ -32,7 +32,7 @@ jobs:
           host: ${{ secrets.ftp_server }}
           username: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
-          remoteDir: public_html/wp-content/plugins/sca-recipe
+          remoteDir: public_html/wp-content/plugins/wp-htmlcsstoimage
           exclude: '.git*,.DS_Store'
           forceUpload: true
           dryRun: false
