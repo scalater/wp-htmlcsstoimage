@@ -20,11 +20,11 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
       - name: 📦 Install Composer dependencies
-        uses: MilesChou/composer-action/7.4/install@v7
+        uses: php-actions/composer@v6
         with:
           args: --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress --no-suggest --no-scripts
           composer_options: --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress --no-suggest --no-scripts
-          composer_version: 2
+          composer_version: latest
           php_version: 7.4
           cache_dir: /tmp/composer-cache
 
