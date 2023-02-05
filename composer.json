@@ -6,10 +6,10 @@
         "brainmaestro/composer-git-hooks": "^2.8",
         "phpstan/phpstan": "^0.12.91",
         "szepeviktor/phpstan-wordpress": "^0.7.6",
-        "phpstan/extension-installer": "^1.1"
+        "phpstan/extension-installer": "^1.1",
+        "woocommerce/woocommerce-sniffs": "^0.1.1"
     },
     "require": {
-        "woocommerce/woocommerce-sniffs": "^0.1.1",
         "scalater/php-htmlcsstoimage": "^1"
     },
     "config": {
