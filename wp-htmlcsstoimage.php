@@ -1,4 +1,5 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+
 /**
  * Plugin Name: HtmlCssToImage
  * Plugin URI: https://castocity.com/
@@ -36,7 +37,6 @@
 
 namespace SCALATER\HTMLCSSTOIMAGE;
 
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once 'vendor/autoload.php';
 require_once 'bootstrap.php';
 
-if ( ! init_plugin( __NAMESPACE__, __FILE__, 'wp-htmlcsstoimage') ) {
+if ( ! init_plugin( __NAMESPACE__, __FILE__, 'wp-htmlcsstoimage' ) ) {
 	return;
 }
 

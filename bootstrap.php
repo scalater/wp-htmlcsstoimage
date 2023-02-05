@@ -42,6 +42,7 @@ function autoload( $class ) {
 
 		if ( file_exists( $filename ) ) {
 			require_once $filename;
+
 			return;
 		}
 	}
@@ -66,26 +67,34 @@ function init_plugin( $namespace, $filename, $slug ) {
 	define( $namespace . '\URL', plugins_url( '/', __DIR__ . DIRECTORY_SEPARATOR . $slug . '.php' ) );
 	define( $namespace . '\HANDLE', $slug );
 
-	add_action( 'plugins_loaded', function () use ( $slug ) {
-		load_plugin_textdomain( $slug, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-		do_action( 'scalater/plugin_loaded' );
-	}, 999 );
+	add_action(
+		'plugins_loaded',
+		function () use ( $slug ) {
+			load_plugin_textdomain( $slug, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+			do_action( 'scalater/plugin_loaded' );
+		},
+		999
+	);
 
-	add_action('init', function (){
-		do_action('scalater/init');
-		if(is_admin()){
-			do_action('scalater/admin');
-		}
-		if (wp_doing_ajax()) {
-			do_action('scalater/ajax');
-		}
-		if (wp_doing_cron()) {
-			do_action('scalater/cron');
-		}
-		if(!is_admin()){
-			do_action('scalater/frontend');
-		}
-	}, 999);
+	add_action(
+		'init',
+		function () {
+			do_action( 'scalater/init' );
+			if ( is_admin() ) {
+				do_action( 'scalater/admin' );
+			}
+			if ( wp_doing_ajax() ) {
+				do_action( 'scalater/ajax' );
+			}
+			if ( wp_doing_cron() ) {
+				do_action( 'scalater/cron' );
+			}
+			if ( ! is_admin() ) {
+				do_action( 'scalater/frontend' );
+			}
+		},
+		999
+	);
 
 	add_to_autoload_namespaces( $namespace, dirname( $filename ) );
 

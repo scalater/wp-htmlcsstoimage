@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
 <ruleset name="SCALATER">
 
+	<ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED" />
+
 	<file>.</file>
 
 	<!-- Exclude paths -->
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/includes/freemius/*</exclude-pattern>
 
 	<!-- Only work with php files -->
 	<arg name="extensions" value="php" />

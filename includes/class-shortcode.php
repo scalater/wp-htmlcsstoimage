@@ -26,10 +26,10 @@ class Shortcode extends Base {
 	 * Adding action hooks
 	 */
 	protected function init() {
-		add_shortcode( 'htmlcsstoimage', array( $this, 'htmlcsstoimage_callback' ) );
-		add_action( 'wp_footer', array( $this, 'wp_enqueue_scripts' ) );
-		add_action( "wp_ajax_nopriv_post_htmlcsstoimage", array( $this, "post_htmlcsstoimage_callback" ) );
-		add_action( "wp_ajax_post_htmlcsstoimage", array( $this, "post_htmlcsstoimage_callback" ) );
+		add_shortcode( 'htmlcsstoimage', [ $this, 'htmlcsstoimage_callback' ] );
+		add_action( 'wp_footer', [ $this, 'wp_enqueue_scripts' ] );
+		add_action( 'wp_ajax_nopriv_post_htmlcsstoimage', [ $this, 'post_htmlcsstoimage_callback' ] );
+		add_action( 'wp_ajax_post_htmlcsstoimage', [ $this, 'post_htmlcsstoimage_callback' ] );
 	}
 
 	public function post_htmlcsstoimage_callback() {
@@ -47,7 +47,7 @@ class Shortcode extends Base {
 			$html    = stripslashes_deep( $_POST['html'] );
 			$in_head = get_option( 'wp_htmlcsstoimage_header' );
 			if ( ! empty( $in_head ) ) {
-				$html = sprintf( '<div>%s</div>',$in_head . $html);
+				$html = sprintf( '<div>%s</div>', $in_head . $html );
 			}
 			$css = '';
 			if ( ! empty( $_POST['css'] ) ) {
@@ -72,7 +72,6 @@ class Shortcode extends Base {
 			} else {
 				wp_send_json_error( $response );
 			}
-
 		} catch ( Exception $ex ) {
 			$this->error_log( $ex->getMessage() );
 		}
@@ -80,17 +79,20 @@ class Shortcode extends Base {
 	}
 
 	public function htmlcsstoimage_callback( $attr, $content = null ) {
-		$params = shortcode_atts( array(
-			'target'       => '',
-			'img_id'       => '',
-			'size'         => '',
-			'save_form_id' => '',
-			'trigger_id'   => '',
-			'subject'      => '',
-			'type'         => '',
-			'podcast_id'   => '',
-			'orientation'  => '',
-		), $attr );
+		$params = shortcode_atts(
+			[
+				'target'       => '',
+				'img_id'       => '',
+				'size'         => '',
+				'save_form_id' => '',
+				'trigger_id'   => '',
+				'subject'      => '',
+				'type'         => '',
+				'podcast_id'   => '',
+				'orientation'  => '',
+			],
+			$attr
+		);
 
 		$attr_data_img = '';
 		if ( ! empty( $params['img_id'] ) ) {
@@ -120,8 +122,17 @@ class Shortcode extends Base {
 		$data['orientation'] = ! empty( $params['orientation'] ) ? sanitize_text_field( $params['orientation'] ) : false;
 		$attr_form_data      = json_encode( $data );
 
-		return sprintf( '<div class="htmlcsstoimage-container" %s %s %s %s %s %s><input type="hidden" value="%s"><div id="htmlcsstoimage-content">%s</div><a href="#" class="create-image"><i class="fas fa-download"></i></a></div>',
-			$attr_entry_id, $attr_trigger_id, $attr_size, $attr_target, $attr_data_img, $attr_have_content, htmlspecialchars( $attr_form_data ), $content );
+		return sprintf(
+			'<div class="htmlcsstoimage-container" %s %s %s %s %s %s><input type="hidden" value="%s"><div id="htmlcsstoimage-content">%s</div><a href="#" class="create-image"><i class="fas fa-download"></i></a></div>',
+			$attr_entry_id,
+			$attr_trigger_id,
+			$attr_size,
+			$attr_target,
+			$attr_data_img,
+			$attr_have_content,
+			htmlspecialchars( $attr_form_data ),
+			$content
+		);
 	}
 
 	public function wp_enqueue_scripts() {
@@ -130,12 +141,12 @@ class Shortcode extends Base {
 		}
 		$js_asset  = $this->get_asset_url( 'script' );
 		$css_asset = $this->get_asset_url( 'style', 'css' );
-		wp_enqueue_script( 'wp-htmlcsstoimage-js', $js_asset, array( "jquery" ), $this->get_version(), true );
-		wp_enqueue_style( 'wp-htmlcsstoimage-css', $css_asset, array(), $this->get_version() );
-		$args = array(
+		wp_enqueue_script( 'wp-htmlcsstoimage-js', $js_asset, [ 'jquery' ], $this->get_version(), true );
+		wp_enqueue_style( 'wp-htmlcsstoimage-css', $css_asset, [], $this->get_version() );
+		$args = [
 			'admin_url' => admin_url( 'admin-ajax.php' ),
 			'nonce'     => wp_create_nonce( $this->get_slug() . __DIR__ ),
-		);
+		];
 		wp_localize_script( 'wp-htmlcsstoimage-js', 'wpHtmlCssToImageObj', $args );
 	}
 }

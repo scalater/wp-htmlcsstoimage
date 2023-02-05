@@ -76,6 +76,7 @@ If you want to see the standards in detail, look at the file `phpcs.xml`.
 To check your code against the coding standards run:
 1. `composer install`
 2. `./vendor/bin/phpcs --standard=phpcs.xml .`
+3. `./vendor/bin/phpcbf --standard=phpcs.xml .`
 
 ### Language
 

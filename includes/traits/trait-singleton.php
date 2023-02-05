@@ -2,6 +2,8 @@
 
 namespace SCALATER\HTMLCSSTOIMAGE\Traits;
 
+use Exception;
+
 defined( 'ABSPATH' ) || exit;
 
 trait Singleton {
@@ -18,10 +20,10 @@ trait Singleton {
 	 * Wakeup method
 	 *
 	 * @since 1.0.0
-	 * @throws \Exception When used.
+	 * @throws Exception When used.
 	 */
 	protected function __wakeup() {
-		throw new \Exception( 'Cannot unserialize singleton' );
+		throw new Exception( 'Cannot unserialize singleton' );
 	}
 
 	/**

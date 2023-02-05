@@ -25,12 +25,12 @@ class Admin extends Base {
 	 * Adding action hooks
 	 */
 	protected function init() {
-		add_action( 'admin_menu', array( $this, 'create_setting_page' ) );
-		add_action( 'admin_init', array( $this, 'settings_init' ) );
+		add_action( 'admin_menu', [ $this, 'create_setting_page' ] );
+		add_action( 'admin_init', [ $this, 'settings_init' ] );
 	}
 
 	public function create_setting_page() {
-		add_options_page( __( 'HtmlCssToImage', 'wp-htmlcsstoimage' ), __( 'HtmlCssToImage', 'wp-htmlcsstoimage' ), 'manage_options', $this->get_slug(), array( $this, 'wp_htmlcsstoimage_page' ) );
+		add_options_page( __( 'HtmlCssToImage', 'wp-htmlcsstoimage' ), __( 'HtmlCssToImage', 'wp-htmlcsstoimage' ), 'manage_options', $this->get_slug(), [ $this, 'wp_htmlcsstoimage_page' ] );
 	}
 
 	public function wp_htmlcsstoimage_page() {
@@ -57,9 +57,9 @@ class Admin extends Base {
 	public function settings_init() {
 		add_settings_section( 'wp_htmlcsstoimage_section', '', '', 'wp_htmlcsstoimage_option' );
 
-		add_settings_field( 'wp_htmlcsstoimage_user_id', __( 'User Id', 'wp-htmlcsstoimage' ), array( $this, 'wp_htmlcsstoimage_user_id_cb' ), 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_section' );
-		add_settings_field( 'wp_htmlcsstoimage_api_key', __( 'API key', 'wp-htmlcsstoimage' ), array( $this, 'wp_htmlcsstoimage_api_key_cb' ), 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_section' );
-		add_settings_field( 'wp_htmlcsstoimage_header', __( 'Header', 'wp-htmlcsstoimage' ), array( $this, 'wp_htmlcsstoimage_header_cb' ), 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_section' );
+		add_settings_field( 'wp_htmlcsstoimage_user_id', __( 'User Id', 'wp-htmlcsstoimage' ), [ $this, 'wp_htmlcsstoimage_user_id_cb' ], 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_section' );
+		add_settings_field( 'wp_htmlcsstoimage_api_key', __( 'API key', 'wp-htmlcsstoimage' ), [ $this, 'wp_htmlcsstoimage_api_key_cb' ], 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_section' );
+		add_settings_field( 'wp_htmlcsstoimage_header', __( 'Header', 'wp-htmlcsstoimage' ), [ $this, 'wp_htmlcsstoimage_header_cb' ], 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_section' );
 
 		register_setting( 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_user_id' );
 		register_setting( 'wp_htmlcsstoimage_option', 'wp_htmlcsstoimage_api_key' );
@@ -88,7 +88,7 @@ class Admin extends Base {
 		$value = get_option( 'wp_htmlcsstoimage_header' );
 		?>
 		<p>
-			<textarea style="width: 550px;" rows="20" name="wp_htmlcsstoimage_header"><?php echo esc_textarea( $value ) ?></textarea>
+			<textarea style="width: 550px;" rows="20" name="wp_htmlcsstoimage_header"><?php echo esc_textarea( $value ); ?></textarea>
 		</p>
 		<?php
 	}

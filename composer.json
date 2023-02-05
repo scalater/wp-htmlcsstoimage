@@ -11,5 +11,11 @@
     "require": {
         "woocommerce/woocommerce-sniffs": "^0.1.1",
         "scalater/php-htmlcsstoimage": "^1"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
