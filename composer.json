@@ -1,16 +1,15 @@
 {
-    "name": "gfirem/wp-htmlcsstoimage",
-    "description": "WP plugin to connect with htmlcsstoimage service",
-    "type": "wp-plugin",
-    "license": "GPLv2 or later",
-    "authors": [
-        {
-            "name": "Guillermo Figueroa Mesa (gfirem)",
-            "email": "gfirem@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
+    "require-dev": {
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "wp-coding-standards/wpcs": "^2.3",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+        "brainmaestro/composer-git-hooks": "^2.8",
+        "phpstan/phpstan": "^0.12.91",
+        "szepeviktor/phpstan-wordpress": "^0.7.6",
+        "phpstan/extension-installer": "^1.1"
+    },
     "require": {
+        "woocommerce/woocommerce-sniffs": "^0.1.1",
         "scalater/php-htmlcsstoimage": "^1"
     }
 }

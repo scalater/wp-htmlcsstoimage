@@ -1,9 +1,13 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Plugin Name: HtmlCssToImage
  * Plugin URI: https://castocity.com/
- * Description: WP plugin to connect with htmlcsstoimage service.
- * Version: 1.0.0
+ * Description: WP plugin to connect with htmlcsstoimage.com service to generate images from html and css
+ * Version: 1.0.0'
+ * Requires at least: 4.6
+ * Tested up to: 6.1.1
+ * Requires PHP: 7.4
+ * Stable tag: 1.0.0
  * Author: Scalater Team
  * Author URI: https://scalater.com/
  * License: GPLv2 or later
@@ -42,9 +46,9 @@ class WpHtmlCssToImage {
 	public function __construct() {
 		$this->load_plugin_textdomain();
 		include_once 'vendor/autoload.php';
-		include_once 'classes/wp-htmlcsstoimage-admin.php';
+		include_once 'includes/wp-htmlcsstoimage-admin.php';
 		new WpHtmlCssToImageAdmin();
-		include_once 'classes/wp-htmlcsstoimage-shortcode.php';
+		include_once 'includes/wp-htmlcsstoimage-shortcode.php';
 		new WpHtmlCssToImageShortCode();
 		//Snippet code
 //		add_action( 'wp_htmlcsstoimage', function ( $response, $entry, $subject, $type, $podcast_id, $orientation ) {
