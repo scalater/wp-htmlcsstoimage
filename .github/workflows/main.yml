@@ -24,7 +24,7 @@ jobs:
         with:
           args: --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress --no-suggest --no-scripts
           version: latest
-          php_version: 8.0
+          php_version: 7.4
 
       - name: 📂 Sync files
         uses: wangyucode/sftp-upload-action@v1.4.8
