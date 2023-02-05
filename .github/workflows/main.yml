@@ -23,10 +23,8 @@ jobs:
         uses: php-actions/composer@v6
         with:
           args: --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress --no-suggest --no-scripts
-          composer_options: --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress --no-suggest --no-scripts
-          composer_version: latest
+          version: latest
           php_version: 7.4
-          cache_dir: /tmp/composer-cache
 
       - name: 📂 Sync files
         uses: wangyucode/sftp-upload-action@v1.4.8
