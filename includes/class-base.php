@@ -2,19 +2,19 @@
 /**
  * Share functions across the plugin
  *
- * @package SCALATER\HTMLCSSTOIMAGE
+ * @package SCALATER\HTML2IMAGE
  * @author Scalater Team
  * @license GPLv2 or later
  */
 
-namespace SCALATER\HTMLCSSTOIMAGE;
+namespace SCALATER\HTML2IMAGE;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Base to share functions across the plugin
  *
- * @package SCALATER\HTMLCSSTOIMAGE
+ * @package SCALATER\HTML2IMAGE
  */
 class Base {
 

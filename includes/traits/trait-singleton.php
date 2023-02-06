@@ -1,6 +1,6 @@
 <?php
 
-namespace SCALATER\HTMLCSSTOIMAGE\Traits;
+namespace SCALATER\HTML2IMAGE\Traits;
 
 use Exception;
 

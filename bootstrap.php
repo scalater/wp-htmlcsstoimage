@@ -3,7 +3,7 @@
  * Version: 1.0.1
  */
 
-namespace SCALATER\HTMLCSSTOIMAGE;
+namespace SCALATER\HTML2IMAGE;
 
 defined( 'ABSPATH' ) || exit;
 

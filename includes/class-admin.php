@@ -2,21 +2,21 @@
 /**
  * Admin class
  *
- * @package SCALATER\HTMLCSSTOIMAGE
+ * @package SCALATER\HTML2IMAGE
  * @author Scalater Team
  * @license GPLv2 or later
  */
 
-namespace SCALATER\HTMLCSSTOIMAGE;
+namespace SCALATER\HTML2IMAGE;
 
-use SCALATER\HTMLCSSTOIMAGE\Traits\Singleton;
+use SCALATER\HTML2IMAGE\Traits\Singleton;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Admin
  *
- * @package SCALATER\HTMLCSSTOIMAGE
+ * @package SCALATER\HTML2IMAGE
  */
 class Admin extends Base {
 	use Singleton;

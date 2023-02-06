@@ -35,7 +35,7 @@
  ****************************************************************************
  */
 
-namespace SCALATER\HTMLCSSTOIMAGE;
+namespace SCALATER\HTML2IMAGE;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

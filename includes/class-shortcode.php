@@ -2,22 +2,23 @@
 /**
  * Shortcode class
  *
- * @package SCALATER\HTMLCSSTOIMAGE
+ * @package SCALATER\HTML2IMAGE
  * @author Scalater Team
  * @license GPLv2 or later
  */
 
-namespace SCALATER\HTMLCSSTOIMAGE;
+namespace SCALATER\HTML2IMAGE;
 
 use Exception;
-use SCALATER\HTMLCSSTOIMAGE\Traits\Singleton;
+use SCALATER\HTML2IMAGE\Traits\Singleton;
+use scalater\HtmlCssToImage\HtmlCssToImage;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
 * Class Shortcode
 *
-* @package SCALATER\HTMLCSSTOIMAGE
+* @package SCALATER\HTML2IMAGE
 */
 class Shortcode extends Base {
 	use Singleton;
@@ -123,7 +124,7 @@ class Shortcode extends Base {
 		$attr_form_data      = json_encode( $data );
 
 		return sprintf(
-			'<div class="htmlcsstoimage-container" %s %s %s %s %s %s><input type="hidden" value="%s"><div id="htmlcsstoimage-content">%s</div><a href="#" class="create-image"><i class="fas fa-download"></i></a></div>',
+			'<div class="htmlcsstoimage-container" %s %s %s %s %s %s><input type="hidden" value="%s"><div id="htmlcsstoimage-content">%s</div><a href="#" class="create-image">Download<i class="fas fa-download"></i></a></div>',
 			$attr_entry_id,
 			$attr_trigger_id,
 			$attr_size,
