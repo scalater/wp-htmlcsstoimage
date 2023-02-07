@@ -48,40 +48,21 @@ if ( ! init_plugin( __NAMESPACE__, __FILE__, 'wp-htmlcsstoimage' ) ) {
 	return;
 }
 
-if ( ! function_exists( 'htm_fs' ) ) {
-	// Create a helper function for easy SDK access.
-	function sca_wp_htm_freemius() {
-		global $sca_wp_htm_fs;
-
-		if ( ! isset( $sca_wp_htm_fs ) ) {
-			// Include Freemius SDK.
-			require_once dirname( __FILE__ ) . '/includes/freemius/start.php';
-
-			$sca_wp_htm_fs = fs_dynamic_init(
-				[
-					'id'                  => '11995',
-					'slug'                => 'htmlcsstoimage',
-					'type'                => 'plugin',
-					'public_key'          => 'pk_c63eda8092135f9188712045d6ca5',
-					'is_premium'          => false,
-					'has_addons'          => false,
-					'has_paid_plans'      => false,
-					'menu'                => [
-						'account'        => true,
-						'support'        => false,
-					],
-				]
-			);
-		}
-
-		return $sca_wp_htm_fs;
-	}
-
-	// Init Freemius.
-	sca_wp_htm_freemius();
-	// Signal that SDK was initiated.
-	do_action( 'wp-htmlcsstoimage-freemius-loaded' );
-}
+init_freemius(
+	[
+		'id'             => '11995',
+		'slug'           => 'htmlcsstoimage',
+		'type'           => 'plugin',
+		'public_key'     => 'pk_c63eda8092135f9188712045d6ca5',
+		'is_premium'     => false,
+		'has_addons'     => false,
+		'has_paid_plans' => false,
+		'menu'           => [
+			'account' => true,
+			'support' => false,
+		],
+	]
+);
 
 add_action( 'scalater/admin', [ Admin::class, 'instance' ] );
 add_action( 'scalater/init', [ ShortCode::class, 'instance' ] );

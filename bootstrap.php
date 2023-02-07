@@ -7,6 +7,20 @@ namespace SCALATER\HTML2IMAGE;
 
 defined( 'ABSPATH' ) || exit;
 
+function init_freemius( $args ) {
+	global $scalater_fs;
+
+	$slug = $args['slug'];
+	if ( ! isset( $scalater_fs[ $slug ] ) ) {
+		require_once dirname( __FILE__ ) . '/includes/freemius/start.php';
+		$scalater_fs[ $slug ] = fs_dynamic_init( $args );
+	}
+
+	do_action( 'scalater_fs_loaded', [ $args ] );
+
+	return $scalater_fs[ $slug ];
+}
+
 function autoload( $class ) {
 	global $sca_autoload_namespaces;
 
