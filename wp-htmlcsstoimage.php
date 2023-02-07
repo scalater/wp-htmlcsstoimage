@@ -58,8 +58,10 @@ init_freemius(
 		'has_addons'     => false,
 		'has_paid_plans' => false,
 		'menu'           => [
-			'account' => true,
-			'support' => false,
+			'first-path' => 'plugins.php',
+			'account'    => false,
+			'contact'    => false,
+			'support'    => false,
 		],
 	]
 );
